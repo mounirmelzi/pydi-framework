@@ -1,10 +1,14 @@
 import inspect
 from functools import wraps
-from typing import Callable, Optional, Iterable, Dict
+from typing import Callable, Optional, Iterable, Dict, Union
 from di.registry import Registry
+from di.locator import Locator
 
 
-def inject(registry: Registry, params: Optional[Iterable[str]] = None) -> Callable:
+def inject(
+    store: Union[Registry, Locator],
+    params: Optional[Iterable[str]] = None,
+) -> Callable:
     tags_by_names: Dict[str, Optional[str]] = _parse_params_and_tags(params)
 
     def decorator(wrapped: Callable) -> Callable:
@@ -23,7 +27,7 @@ def inject(registry: Registry, params: Optional[Iterable[str]] = None) -> Callab
                 if (params is not None) and (name not in tags_by_names):
                     continue
 
-                bound.arguments[name] = registry.resolve(
+                bound.arguments[name] = store.resolve(
                     interface=param.annotation,
                     tag=tags_by_names.get(name),
                 )

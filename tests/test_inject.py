@@ -1,5 +1,5 @@
 import pytest
-from di import Registry, inject, RegistrationMode, NotRegistered
+from di import Registry, Locator, inject, RegistrationMode, NotRegistered
 
 
 class Service:
@@ -13,6 +13,14 @@ def registry() -> Registry:
     r.register(Service, lambda: Service(), RegistrationMode.SINGLETON, tag="special")
     r.register(int, lambda: 42, RegistrationMode.SINGLETON, tag="answer")
     return r
+
+
+@pytest.fixture
+def locator() -> Locator:
+    locator = Locator()
+    locator.register(Service, lambda: Service(), RegistrationMode.SINGLETON)
+    locator.register(int, lambda: 42, RegistrationMode.SINGLETON, tag="answer")
+    return locator
 
 
 def test_simple_injection(registry: Registry):
@@ -206,3 +214,80 @@ def test_constructor_multiple_params_with_tag(registry: Registry):
     assert isinstance(obj.service, Service)
     assert isinstance(obj.b, Service)
     assert obj.service is not obj.b
+
+
+def test_simple_injection_with_locator(locator: Locator):
+    @inject(locator, params=["service"])
+    def f(service: Service):
+        return service
+
+    instance = f()
+    assert isinstance(instance, Service)
+
+
+def test_injection_with_tag_and_locator(locator: Locator):
+    locator.register(
+        Service,
+        lambda: Service(),
+        RegistrationMode.SINGLETON,
+        tag="special",
+    )
+
+    @inject(locator, params=["service:special"])
+    def f(service: Service):
+        return service
+
+    instance = f()
+    assert isinstance(instance, Service)
+
+
+def test_override_scope_injection(locator: Locator):
+    with locator.override():
+        locator.register(
+            Service,
+            lambda: Service(),
+            RegistrationMode.SINGLETON,
+            tag="special",
+        )
+
+        @inject(locator, params=["service:special"])
+        def f(service: Service):
+            return service
+
+        instance = f()
+        assert isinstance(instance, Service)
+
+
+def test_constructor_injection_with_locator(locator: Locator):
+    class MyClass:
+        @inject(locator, params=["service"])
+        def __init__(self, service: Service):
+            self.service = service
+
+    obj = MyClass()
+    assert isinstance(obj.service, Service)
+
+
+def test_manual_override_with_locator(locator: Locator):
+    class MyClass:
+        @inject(locator, params=["service"])
+        def __init__(self, service: Service):
+            self.service = service
+
+    custom = Service()
+    obj = MyClass(service=custom)
+    assert obj.service is custom
+
+
+def test_nested_override_with_locator(locator: Locator):
+    @inject(locator, params=["num:answer"])
+    def f(num: int):
+        return num
+
+    assert f() == 42
+    locator.register(int, lambda: 1, RegistrationMode.LAZY_SINGLETON, tag="answer")
+    assert f() == 1
+    with locator.override():
+        locator.register(int, lambda: 2, RegistrationMode.FACTORY, tag="answer")
+        assert f() == 2
+    assert f() == 1
