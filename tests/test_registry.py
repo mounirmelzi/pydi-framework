@@ -1,7 +1,5 @@
 import pytest
-from di.registry import Registry
-from di.registration_mode import RegistrationMode
-from di.exceptions import NotRegistered
+from di import Registry, RegistrationMode, NotRegistered
 
 
 class Service:
