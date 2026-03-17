@@ -7,11 +7,11 @@ class Service:
 
 
 @pytest.fixture
-def registry():
+def registry() -> Registry:
     return Registry()
 
 
-def test_singleton_registration(registry):
+def test_singleton_registration(registry: Registry):
     registry.register(Service, lambda: Service(), RegistrationMode.SINGLETON)
     instance1 = registry.resolve(Service)
     instance2 = registry.resolve(Service)
@@ -19,7 +19,7 @@ def test_singleton_registration(registry):
     assert instance1 is instance2
 
 
-def test_factory_registration(registry):
+def test_factory_registration(registry: Registry):
     registry.register(Service, lambda: Service(), RegistrationMode.FACTORY)
     instance1 = registry.resolve(Service)
     instance2 = registry.resolve(Service)
@@ -27,7 +27,7 @@ def test_factory_registration(registry):
     assert instance1 is not instance2
 
 
-def test_lazy_singleton_registration(registry):
+def test_lazy_singleton_registration(registry: Registry):
     registry.register(Service, lambda: Service(), RegistrationMode.LAZY_SINGLETON)
     instance1 = registry.resolve(Service)
     instance2 = registry.resolve(Service)
@@ -35,7 +35,7 @@ def test_lazy_singleton_registration(registry):
     assert instance1 is instance2
 
 
-def test_registration_with_tag(registry):
+def test_registration_with_tag(registry: Registry):
     registry.register(
         Service,
         lambda: Service(),
@@ -55,12 +55,12 @@ def test_registration_with_tag(registry):
     assert instance1 is not instance2
 
 
-def test_not_registered_raises(registry):
+def test_not_registered_raises(registry: Registry):
     with pytest.raises(NotRegistered):
         registry.resolve(Service)
 
 
-def test_factory_returns_different_instances_with_tag(registry):
+def test_factory_returns_different_instances_with_tag(registry: Registry):
     registry.register(Service, lambda: Service(), RegistrationMode.FACTORY, tag="one")
     registry.register(Service, lambda: Service(), RegistrationMode.FACTORY, tag="two")
     instance1 = registry.resolve(Service, tag="one")
@@ -68,7 +68,7 @@ def test_factory_returns_different_instances_with_tag(registry):
     assert instance1 is not instance2
 
 
-def test_lazy_singleton_creates_once(registry):
+def test_lazy_singleton_creates_once(registry: Registry):
     def factory():
         nonlocal call_count
         call_count += 1

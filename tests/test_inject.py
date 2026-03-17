@@ -15,7 +15,7 @@ def registry() -> Registry:
     return r
 
 
-def test_simple_injection(registry):
+def test_simple_injection(registry: Registry):
     @inject(registry, params=["service"])
     def f(service: Service):
         return service
@@ -24,7 +24,7 @@ def test_simple_injection(registry):
     assert isinstance(instance, Service)
 
 
-def test_injection_with_tag(registry):
+def test_injection_with_tag(registry: Registry):
     @inject(registry, params=["service:special"])
     def f(service: Service):
         return service
@@ -33,7 +33,7 @@ def test_injection_with_tag(registry):
     assert isinstance(instance, Service)
 
 
-def test_default_values_not_overridden(registry):
+def test_default_values_not_overridden(registry: Registry):
     @inject(registry, params=["service"])
     def f(service: Service, num: int = 7):
         return service, num
@@ -43,7 +43,7 @@ def test_default_values_not_overridden(registry):
     assert isinstance(s, Service)
 
 
-def test_manual_override(registry):
+def test_manual_override(registry: Registry):
     custom = Service()
 
     @inject(registry, params=["service"])
@@ -54,7 +54,7 @@ def test_manual_override(registry):
     assert instance is custom
 
 
-def test_missing_required_param_raises(registry):
+def test_missing_required_param_raises(registry: Registry):
     @inject(registry, params=["service"])
     def f(service: Service, value: int):
         return service, value
@@ -63,7 +63,7 @@ def test_missing_required_param_raises(registry):
         f()
 
 
-def test_multiple_params(registry):
+def test_multiple_params(registry: Registry):
     @inject(registry, params=["service", "num:answer"])
     def f(service: Service, num: int):
         return service, num
@@ -73,7 +73,7 @@ def test_multiple_params(registry):
     assert n == 42
 
 
-def test_partial_manual_override(registry):
+def test_partial_manual_override(registry: Registry):
     @inject(registry, params=["service", "num:answer"])
     def f(service: Service, num: int):
         return service, num
@@ -83,7 +83,7 @@ def test_partial_manual_override(registry):
     assert n == 99
 
 
-def test_no_params_injected_when_params_none(registry):
+def test_no_params_injected_when_params_none(registry: Registry):
     @inject(registry)
     def f(service: Service, num: int):
         return service, num
@@ -92,7 +92,7 @@ def test_no_params_injected_when_params_none(registry):
         f()
 
 
-def test_instance_method_injection(registry):
+def test_instance_method_injection(registry: Registry):
     class MyClass:
         @inject(registry, params=["service"])
         def method(self, service: Service):
@@ -103,7 +103,7 @@ def test_instance_method_injection(registry):
     assert isinstance(instance, Service)
 
 
-def test_class_method_injection(registry):
+def test_class_method_injection(registry: Registry):
     class MyClass:
         @classmethod
         @inject(registry, params=["service"])
@@ -115,7 +115,7 @@ def test_class_method_injection(registry):
     assert cls_ref is MyClass
 
 
-def test_static_method_injection(registry):
+def test_static_method_injection(registry: Registry):
     class MyClass:
         @staticmethod
         @inject(registry, params=["service"])
@@ -126,7 +126,7 @@ def test_static_method_injection(registry):
     assert isinstance(instance, Service)
 
 
-def test_manual_override_instance_method(registry):
+def test_manual_override_instance_method(registry: Registry):
     class MyClass:
         @inject(registry, params=["service"])
         def method(self, service: Service):
@@ -138,7 +138,7 @@ def test_manual_override_instance_method(registry):
     assert instance is custom
 
 
-def test_manual_override_class_method(registry):
+def test_manual_override_class_method(registry: Registry):
     class MyClass:
         @classmethod
         @inject(registry, params=["service"])
@@ -150,7 +150,7 @@ def test_manual_override_class_method(registry):
     assert instance is custom
 
 
-def test_manual_override_static_method(registry):
+def test_manual_override_static_method(registry: Registry):
     class MyClass:
         @staticmethod
         @inject(registry, params=["service"])
@@ -162,7 +162,7 @@ def test_manual_override_static_method(registry):
     assert instance is custom
 
 
-def test_injection_in_constructor(registry):
+def test_injection_in_constructor(registry: Registry):
     class MyClass:
         @inject(registry, params=["service"])
         def __init__(self, service: Service):
@@ -172,7 +172,7 @@ def test_injection_in_constructor(registry):
     assert isinstance(obj.service, Service)
 
 
-def test_constructor_manual_override(registry):
+def test_constructor_manual_override(registry: Registry):
     class MyClass:
         @inject(registry, params=["service"])
         def __init__(self, service: Service):
@@ -183,7 +183,7 @@ def test_constructor_manual_override(registry):
     assert obj.service is custom
 
 
-def test_constructor_with_defaults(registry):
+def test_constructor_with_defaults(registry: Registry):
     class MyClass:
         @inject(registry, params=["service"])
         def __init__(self, service: Service, num: int = 99):
@@ -195,7 +195,7 @@ def test_constructor_with_defaults(registry):
     assert obj.num == 99
 
 
-def test_constructor_multiple_params_with_tag(registry):
+def test_constructor_multiple_params_with_tag(registry: Registry):
     class MyClass:
         @inject(registry, params=["service", "b:special"])
         def __init__(self, service: Service, b: Service):
