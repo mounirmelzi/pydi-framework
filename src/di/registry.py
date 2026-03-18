@@ -1,7 +1,7 @@
 from typing import Optional, Type, Callable
 from di.store import Store, create_store
 from di.registration_mode import RegistrationMode
-from di.exceptions import NotRegistered
+from di.exceptions import NotRegisteredError
 
 
 class Registry:
@@ -33,7 +33,7 @@ class Registry:
     ) -> T:
         key = (interface, tag)
         if key not in self.store:
-            raise NotRegistered(f"No registration found for {interface} with tag {tag}")
+            raise NotRegisteredError(interface, tag)
 
         mode, registration = self.store[key]
 

@@ -1,5 +1,5 @@
 import pytest
-from di import Registry, RegistrationMode, NotRegistered
+from di import Registry, RegistrationMode, NotRegisteredError
 
 
 class Service:
@@ -56,7 +56,7 @@ def test_registration_with_tag(registry: Registry):
 
 
 def test_not_registered_raises(registry: Registry):
-    with pytest.raises(NotRegistered):
+    with pytest.raises(NotRegisteredError):
         registry.resolve(Service)
 
 

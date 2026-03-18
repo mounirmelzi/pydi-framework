@@ -1,5 +1,5 @@
 import pytest
-from di import RegistrationMode, NotRegistered, Locator
+from di import RegistrationMode, NotRegisteredError, Locator
 
 
 class Service:
@@ -23,13 +23,13 @@ def test_basic_resolution(locator: Locator):
 
 
 def test_not_registered_propagates(locator: Locator):
-    with pytest.raises(NotRegistered):
+    with pytest.raises(NotRegisteredError):
         locator.resolve(str)
 
 
 def test_exception_from_override_registry(locator: Locator):
     with locator.override():
-        with pytest.raises(NotRegistered):
+        with pytest.raises(NotRegisteredError):
             locator.resolve(str)
 
 

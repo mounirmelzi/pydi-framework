@@ -3,18 +3,19 @@ from collections import deque
 from typing import Optional, Type, Callable
 from di.registry import Registry
 from di.registration_mode import RegistrationMode
-from di.exceptions import NotRegistered
+from di.exceptions import NotRegisteredError, RootScopeCloseError
 
 
 class Locator:
     def __init__(self):
-        self.registries = deque()
-        self.open_scope()
+        self.reset_all_scopes()
 
     def open_scope(self) -> None:
         self.registries.append(Registry())
 
     def close_scope(self) -> None:
+        if len(self.registries) == 1:
+            raise RootScopeCloseError()
         self.registries.pop()
 
     @contextmanager
@@ -28,6 +29,13 @@ class Locator:
     @property
     def active_registry(self) -> Registry:
         return self.registries[-1]
+
+    def reset_current_scope(self):
+        self.registries[-1] = Registry()
+
+    def reset_all_scopes(self):
+        self.registries = deque()
+        self.open_scope()
 
     def register[T](
         self,
@@ -43,9 +51,9 @@ class Locator:
         interface: Type[T],
         tag: Optional[str] = None,
     ) -> T:
-        for index, registry in enumerate(reversed(self.registries)):
+        for registry in reversed(self.registries):
             try:
                 return registry.resolve(interface, tag)
-            except NotRegistered as exception:
-                if index == len(self.registries) - 1:
-                    raise exception
+            except NotRegisteredError:
+                continue
+        raise NotRegisteredError(interface, tag)

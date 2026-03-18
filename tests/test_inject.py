@@ -1,5 +1,5 @@
 import pytest
-from di import Registry, Locator, inject, RegistrationMode, NotRegistered
+from di import Registry, Locator, inject, RegistrationMode, NotRegisteredError
 
 
 class Service:
@@ -96,7 +96,7 @@ def test_no_params_injected_when_params_none(registry: Registry):
     def f(service: Service, num: int):
         return service, num
 
-    with pytest.raises(NotRegistered):
+    with pytest.raises(NotRegisteredError):
         f()
 
 
