@@ -4,7 +4,18 @@ version = "1.0.0"
 description = "Python Dependency Injection Framework"
 readme = "README.md"
 authors = [
-    { name = "Mounir Melzi" }
+    { name = "Mounir Melzi" },
+]
+maintainers = [
+    { name = "Mounir Melzi" },
+]
+keywords = [
+    "Dependency injection",
+    "DI",
+    "Design patterns",
+    "Factory",
+    "Singleton",
+    "Lazy Singleton",
 ]
 
 requires-python = ">=3.14"
@@ -15,6 +26,12 @@ dependencies = []
 dev = [
     "pytest>=9.0.2",
 ]
+
+
+[project.urls]
+Homepage = "https://github.com/mounirmelzi/pydi-framework"
+Documentation = "https://github.com/mounirmelzi/pydi-framework"
+Download = "https://github.com/mounirmelzi/pydi-framework"
 
 
 [tool.pytest.ini_options]
