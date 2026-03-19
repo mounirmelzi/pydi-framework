@@ -1,7 +1,12 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "@/pages/Home";
+
 export default function App() {
   return (
-    <main className="w-screen h-screen flex items-center justify-center">
-      PyDI Framework
-    </main>
+    <Router>
+      <Routes>
+        <Route path="/pydi-framework/" element={<Home />} />
+      </Routes>
+    </Router>
   );
 }
