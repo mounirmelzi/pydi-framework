@@ -132,7 +132,7 @@ function Hero() {
               />
 
               <CodeWindow
-                filename="user_service.py"
+                filename="service.py"
                 code={HERO_CODE}
                 className="shadow-[0_0_60px_rgba(0,0,0,0.5)] border-border/70"
               />
