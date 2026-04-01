@@ -2,6 +2,7 @@ import { Zap, Shield, RefreshCw, Code2, Box } from "lucide-react";
 
 export const LINKS = {
   Docs: "https://mounirmelzi.github.io/pydi-framework/",
+  PyPI: "https://pypi.org/project/pydi-framework/",
   GitHub: "https://github.com/mounirmelzi/pydi-framework",
   Examples: "https://github.com/mounirmelzi/pydi-framework/tree/main/examples",
 } as const;

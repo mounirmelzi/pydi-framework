@@ -40,7 +40,11 @@ export function Navbar({ scrolled }: { scrolled: boolean }) {
           <code className="hidden sm:block text-xs font-mono bg-muted border border-border px-3 py-1.5 rounded-md text-primary select-all">
             pip install pydi-framework
           </code>
-          <Button size="sm">Get Started</Button>
+          <Button asChild size="sm">
+            <a href={LINKS.PyPI} target="_blank">
+              Get Started
+            </a>
+          </Button>
         </div>
       </div>
     </nav>

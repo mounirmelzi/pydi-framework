@@ -31,7 +31,15 @@ export function Footer() {
         </div>
 
         <p className="text-xs font-mono text-muted-foreground">
-          Built with Python 3.14+
+          Built with Python 3.14+ and ❤️ by{" "}
+          <a
+            href="https://www.linkedin.com/in/mounir-melzi/"
+            target="_blank"
+            className="text-sm underline italic text-[#ff557a] hover:text-primary transition-colors"
+          >
+            Mounir Melzi
+          </a>
+          . All rights reserved.
         </p>
       </div>
     </footer>
