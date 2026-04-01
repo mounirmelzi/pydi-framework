@@ -3,6 +3,8 @@ name = "pydi-framework"
 version = "1.0.0"
 description = "Python Dependency Injection Framework"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE.txt"]
 authors = [
     { name = "Mounir Melzi" },
 ]
@@ -17,6 +19,9 @@ keywords = [
     "Singleton",
     "Lazy Singleton",
 ]
+classifiers = [
+  "Programming Language :: Python",
+]
 
 requires-python = ">=3.14"
 
@@ -29,9 +34,10 @@ dev = [
 
 
 [project.urls]
-Homepage = "https://github.com/mounirmelzi/pydi-framework"
-Documentation = "https://github.com/mounirmelzi/pydi-framework"
-Download = "https://github.com/mounirmelzi/pydi-framework"
+Homepage = "https://mounirmelzi.github.io/pydi-framework/"
+Documentation = "https://mounirmelzi.github.io/pydi-framework/"
+Repository = "https://github.com/mounirmelzi/pydi-framework.git"
+Download = "https://pypi.org/project/pydi-framework/"
 
 
 [tool.pytest.ini_options]
