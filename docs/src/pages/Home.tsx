@@ -189,7 +189,7 @@ function Features() {
       />
 
       <div className="max-w-7xl mx-auto px-6">
-        <SectionEyebrow>Why Pyject</SectionEyebrow>
+        <SectionEyebrow>Why pydi-framework</SectionEyebrow>
 
         <div className="grid md:grid-cols-2 gap-4 items-end mb-16">
           <h2 className="text-4xl xl:text-5xl font-bold text-foreground leading-tight">
