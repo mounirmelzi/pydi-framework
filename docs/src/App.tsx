@@ -1,12 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "@/pages/Home";
+
+import { MainLayout } from "@/layouts/main";
+
+import { HomePage } from "@/pages/home";
 
 export default function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/pydi-framework/" element={<Home />} />
-      </Routes>
+      <MainLayout>
+        <Routes>
+          <Route path="/pydi-framework/" element={<HomePage />} />
+        </Routes>
+      </MainLayout>
     </Router>
   );
 }
