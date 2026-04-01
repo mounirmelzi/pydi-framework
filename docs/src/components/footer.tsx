@@ -30,18 +30,26 @@ export function Footer() {
           ))}
         </div>
 
-        <p className="text-xs font-mono text-muted-foreground">
-          Built with Python 3.14+ and ❤️ by{" "}
-          <a
-            href="https://www.linkedin.com/in/mounir-melzi/"
-            target="_blank"
-            className="text-sm underline italic text-[#ff557a] hover:text-primary transition-colors"
-          >
-            Mounir Melzi
-          </a>
-          . All rights reserved.
+        <p className="text-xs font-mono text-muted-foreground text-center">
+          Built with Python 3.14+ and ❤️
+          <br />
+          By <LinkedInLink />.
+          <br />
+          All rights reserved!
         </p>
       </div>
     </footer>
+  );
+}
+
+function LinkedInLink() {
+  return (
+    <a
+      href="https://www.linkedin.com/in/mounir-melzi/"
+      target="_blank"
+      className="text-sm underline italic text-[#fc325d] hover:text-primary transition-colors"
+    >
+      Mounir Melzi
+    </a>
   );
 }
