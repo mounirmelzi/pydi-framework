@@ -204,7 +204,7 @@ function Features() {
         </div>
 
         {/* Feature cards */}
-        <div className="grid gap-4 mb-24 grid-cols-[repeat(auto-fit,minmax(400px,auto))]">
+        <div className="grid gap-4 mb-24 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map(({ icon: Icon, title, desc, accent }) => (
             <Card
               key={title}

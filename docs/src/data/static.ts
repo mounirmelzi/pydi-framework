@@ -44,7 +44,7 @@ export const FEATURES = [
     icon: Box,
     title: "Framework Agnostic",
     desc: "Drop into Django, FastAPI, Flask, or bare Python scripts. No lock-in required.",
-    accent: false,
+    accent: true,
   },
 ] as const;
 
